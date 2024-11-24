@@ -152,10 +152,12 @@ class _detailes1State extends State<detailes1> {
                                       onPressed: () {
                                         setState(() {
                                           showDialog(
+                                            // ---------
                                             context: context,
                                             builder: (context) {
                                               return AlertDialog(
-                                                title: Text("are you sure?"),
+                                                title:
+                                                    Text("are you sure---->?"),
                                                 actions: [
                                                   InkWell(
                                                     onTap: () {
