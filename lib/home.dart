@@ -1,9 +1,9 @@
 import 'package:electricity_company/detiles1.dart';
 import 'package:electricity_company/detiles2.dart';
 import 'package:electricity_company/detiles3.dart';
-import 'package:electricity_company/detiles4.dart';
-import 'package:electricity_company/detiles5.dart';
-import 'package:electricity_company/detiles6.dart';
+// import 'package:electricity_company/detiles4.dart';
+// import 'package:electricity_company/detiles5.dart';
+// import 'package:electricity_company/detiles6.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -25,7 +25,7 @@ class _HomeState extends State<Home> {
   List listsubtile = [
     "الابلاغ عن انقطاع الكهرباء",
     "استعراض الفواتير ومتابعتها",
-    "للاستفسارات والشكاوي",
+    "الدعم الفني",
     "خدمات لسلامتك",
     "سدد فواتيرك",
     "اطلب عداد كهرباء منزلك",
@@ -38,7 +38,7 @@ class _HomeState extends State<Home> {
     Icons.payment,
     Icons.electric_meter,
   ];
-  int index = 0;
+  int index = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -112,20 +112,21 @@ class _HomeState extends State<Home> {
             ),
           ),
           Expanded(
-              flex: 8,
-              child: GridView.builder(
-                  itemCount: listTitle.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 1.1,
-                      mainAxisSpacing: 2,
-                      crossAxisSpacing: 2,
-                      crossAxisCount: 2),
-                  itemBuilder: (context, i) => carditem(
-                        Title: listTitle[i],
-                        SubTitle: listsubtile[i],
-                        Icon1: listicon[i],
-                      ))),
-          // Divider()
+            flex: 8,
+            child: GridView.builder(
+              itemCount: listTitle.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  childAspectRatio: 1.1,
+                  mainAxisSpacing: 2,
+                  crossAxisSpacing: 2,
+                  crossAxisCount: 2),
+              itemBuilder: (context, i) => carditem(
+                Title: listTitle[i],
+                SubTitle: listsubtile[i],
+                Icon1: listicon[i],
+              ),
+            ),
+          ),
         ],
       ),
       bottomNavigationBar: NavigationBar(
@@ -182,8 +183,6 @@ class carditem extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => detailes1(
                         subTitle: SubTitle,
-                        titel: Title,
-                        icon1: Icon1,
                       ),
                     ));
               }
@@ -195,7 +194,6 @@ class carditem extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => detailes2(
                         subTitle: SubTitle,
-                        titel: Title,
                         icon1: Icon1,
                       ),
                     ));
@@ -208,51 +206,49 @@ class carditem extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => detailes3(
                         subTitle: SubTitle,
-                        titel: Title,
-                        icon1: Icon1,
                       ),
                     ));
               }
               break;
-            case "خدمات اخرى":
-              {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => detailes4(
-                        subTitle: SubTitle,
-                        titel: Title,
-                        icon1: Icon1,
-                      ),
-                    ));
-              }
-              break;
-            case "تسديد فواتبر":
-              {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => detailes5(
-                        subTitle: SubTitle,
-                        titel: Title,
-                        icon1: Icon1,
-                      ),
-                    ));
-              }
-              break;
-            case "طلب عداد كهرباء":
-              {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => detailes6(
-                        subTitle: SubTitle,
-                        titel: Title,
-                        icon1: Icon1,
-                      ),
-                    ));
-              }
-              break;
+            // case "خدمات اخرى":
+            //   {
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //           builder: (context) => detailes4(
+            //             subTitle: SubTitle,
+            //             titel: Title,
+            //             icon1: Icon1,
+            //           ),
+            //         ));
+            //   }
+            //   break;
+            // case "تسديد فواتبر":
+            //   {
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //           builder: (context) => detailes5(
+            //             subTitle: SubTitle,
+            //             titel: Title,
+            //             icon1: Icon1,
+            //           ),
+            //         ));
+            //   }
+            //   break;
+            // case "طلب عداد كهرباء":
+            //   {
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //           builder: (context) => detailes6(
+            //             subTitle: SubTitle,
+            //             titel: Title,
+            //             icon1: Icon1,
+            //           ),
+            //         ));
+            //   }
+            //   break;
           }
         },
         child: Container(
@@ -278,13 +274,13 @@ class carditem extends StatelessWidget {
                           color: const Color.fromARGB(255, 227, 136, 0),
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Expanded(
                         child: Text(
                           textDirection: TextDirection.rtl,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
-                          "${Title}",
+                          "$Title",
                           style: const TextStyle(
                               color: Colors.black54,
                               fontWeight: FontWeight.w600),
@@ -303,8 +299,8 @@ class carditem extends StatelessWidget {
                       child: Text(
                         textDirection: TextDirection.rtl,
                         overflow: TextOverflow.ellipsis,
-                        "${SubTitle}",
-                        style: TextStyle(
+                        "$SubTitle",
+                        style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
                             color: Colors.black),

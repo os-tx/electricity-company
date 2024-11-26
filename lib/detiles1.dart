@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class detailes1 extends StatefulWidget {
-  detailes1({super.key, this.subTitle, this.titel, this.icon1});
+  detailes1({super.key, this.subTitle});
   String? subTitle;
-  String? titel;
-  IconData? icon1;
 
   @override
   State<detailes1> createState() => _detailes1State();
@@ -14,8 +12,8 @@ class detailes1 extends StatefulWidget {
 class _detailes1State extends State<detailes1> {
   TextEditingController cntroler_report = new TextEditingController();
   List element = [
-    "بلاغ",
-    "بلاغ",
+    "انقطاع الكهرباء في منطقة فوه الانشاءات",
+    "ضعف الكهرباء في منطقة خلف",
     "بلاغ",
   ];
   List filter = [];
@@ -34,7 +32,7 @@ class _detailes1State extends State<detailes1> {
 
   update(String newquyry) {
     setState(() {});
-    print(newquyry);
+    // print(newquyry);
     query = newquyry;
     filter = element
         .where((t) => t.toLowerCase().contains(query.toLowerCase()))
@@ -46,69 +44,88 @@ class _detailes1State extends State<detailes1> {
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.sizeOf(context).width;
-    var h = MediaQuery.sizeOf(context).height;
+    // var a = ModalRoute.of(context)!.settings.arguments as Map?;
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton.extended(
-        label: Text(
-          "بلاغ",
-          style: TextStyle(color: Colors.white),
+        label: const Text(
+          "اضافة بلاغ",
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
         ),
-        icon: Icon(
+        icon: const Icon(
           Icons.report,
           color: Colors.white,
         ),
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.orangeAccent,
         onPressed: () {
           showModalBottomSheet(
             backgroundColor: Colors.white,
             context: context,
             builder: (context) {
               return Container(
-                  height: 300,
-                  width: w,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.center,
-                          child: TextField(
-                            controller: cntroler_report,
-                            textAlign: TextAlign.right,
-                            decoration: const InputDecoration(
-                                labelText: "اضافة بلاغ",
-                                suffixIcon: Icon(
-                                  Icons.add_box_outlined,
-                                )),
-                          ),
+                height: 400,
+                width: w,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: TextField(
+                          controller: cntroler_report,
+                          textAlign: TextAlign.right,
+                          decoration: const InputDecoration(
+                              labelText: "اضافة بلاغ",
+                              suffixIcon: Icon(
+                                Icons.add_box_outlined,
+                              )),
                         ),
-                        MaterialButton(
-                          color: Colors.orange,
-                          textColor: Colors.white,
-                          minWidth: 300,
-                          height: 40,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                          onPressed: () {
-                            setState(() {});
-                            element.add(cntroler_report.text);
-                            Navigator.of(context).pop();
-                            // Navigator.pushNamed(context, 'detil-1');
-                          },
-                          child: const Text("اضافه"),
-                        )
-                      ],
-                    ),
-                  ));
+                      ),
+                      MaterialButton(
+                        color: Colors.orange,
+                        textColor: Colors.white,
+                        minWidth: 300,
+                        height: 40,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        onPressed: () {
+                          setState(() {});
+                          element.add(cntroler_report.text);
+                          cntroler_report.clear();
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text(
+                          "اضافه",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              );
             },
           );
         },
       ),
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text("${widget.subTitle}"),
+        backgroundColor: Colors.orangeAccent,
+        title: Text(
+          "${widget.subTitle}",
+          style:
+              const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+        ),
       ),
       body: Column(
         children: [
@@ -124,10 +141,21 @@ class _detailes1State extends State<detailes1> {
                       textDirection: TextDirection.rtl,
                       textAlign: TextAlign.right,
                       decoration: const InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
                         labelText: "بحث",
                         labelStyle: TextStyle(fontSize: 20),
                         suffixIcon: Icon(Icons.search),
                       ),
+                    ),
+                  ),
+                  Container(
+                    width: 250,
+                    child: const Divider(
+                      thickness: 1,
                     ),
                   ),
                   ListView.builder(
@@ -135,54 +163,56 @@ class _detailes1State extends State<detailes1> {
                     itemCount: filter.length,
                     itemBuilder: (context, i) {
                       return Card(
-                        color: Colors.orange,
-                        shadowColor: Colors.black,
+                        color: Colors.white,
+                        shadowColor: Colors.orangeAccent,
                         elevation: 10,
                         child: ListTile(
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                filter[i],
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                              Row(
-                                children: [
-                                  IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return AlertDialog(
-                                                title: Text("are you sure?"),
-                                                actions: [
-                                                  InkWell(
-                                                    onTap: () {
-                                                      element.removeAt(i);
-                                                    },
-                                                    child: Text("نعم"),
-                                                  ),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                    child: Text("لا"),
-                                                  )
-                                                ],
-                                              );
-                                            },
-                                          );
-                                        });
-                                      },
+                          title: Text(
+                            filter[i],
+                            style: const TextStyle(color: Colors.black),
+                          ),
+                          // subtitle: Text("${a?['nameoridnum']}"),
+                          leading: const Icon(Icons.person),
+                          trailing: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      content:
+                                          const Text("هل انت متاكد من الحذف؟"),
                                       icon: const Icon(
-                                        Icons.delete_forever_outlined,
-                                        color: Colors.white,
-                                      ))
-                                ],
-                              )
-                            ],
+                                        Icons.warning_rounded,
+                                        color: Colors.red,
+                                      ),
+                                      title: const Text("حذف؟؟"),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            setState(() {});
+                                            Navigator.pop(context);
+                                            element.removeAt(i);
+                                          },
+                                          child: const Text("نعم"),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            setState(() {});
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text("لا"),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              });
+                            },
+                            icon: const Icon(
+                              Icons.delete_forever_outlined,
+                              color: Colors.red,
+                            ),
                           ),
                         ),
                       );
@@ -191,32 +221,6 @@ class _detailes1State extends State<detailes1> {
                 ],
               )
             ],
-            // ),
-            // GestureDetector(
-            //   onTap: () {},
-            //   child: Container(
-            //     // height: h,
-            //     child: Align(
-            //       alignment: Alignment.bottomRight,
-            //       child: Container(
-            //         alignment: Alignment.center,
-            //         height: 50,
-            //         width: 100,
-            //         decoration: BoxDecoration(
-            //             color: const Color.fromARGB(255, 228, 204, 239),
-            //             borderRadius: BorderRadius.circular(15)),
-            //         child: const Text(
-            //           "اضافة بلاغ",
-            //           style: TextStyle(
-            //               fontSize: 15,
-            //               color: Colors.purple,
-            //               fontWeight: FontWeight.bold),
-            //           textAlign: TextAlign.center,
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
           )
         ],
       ),

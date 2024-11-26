@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-// ignore: depend_on_referenced_packages
-// import 'package:bcrypt/bcrypt.dart';
-// import 'cupertino';
-// import 'package:cupertino_icons/cupertino_icons.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -13,15 +9,12 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool secure = true;
+  var nameoridnumCont = TextEditingController();
   var formstate = GlobalKey<FormState>();
-  var checkpasswordController = TextEditingController();
 
-  // final String _storedHashedPassword =
-  //     BCrypt.hashpw('passwored', BCrypt.gensalt());
   @override
   Widget build(BuildContext context) {
-    // var args = ModalRoute.of(context)!.settings.arguments as Map?;
-    // String passwordInput = checkpasswordController.text;
+    var args = ModalRoute.of(context)!.settings.arguments as Map?;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -59,18 +52,17 @@ class _LoginState extends State<Login> {
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "يرجى ادخال اسم المستخدم او رقم الهوية";
-                          } else if (!RegExp(r'^[0-9-a-z-A-Z-ا-ي]+$')
+                          } else if (!RegExp(r'^[- 0-9-a-z-A-Z-ا-ي]+$')
                               .hasMatch(value)) {
-                            return "يرجى ادخال الاسم صحيح ";
-                          }
-
-                          //  else if (value != args?['name']) {
-                          // //   return "يرجى التحقق من اسم المستخدم او رقم الهوية";
-                          // }
-                          else {
+                            return "يرجى ادخال اسم صحيح ";
+                          } else if (value != args?['name'] &&
+                              value != args?['idnumber']) {
+                            return "يرجى التأكد من اسم المستخدم او رقم الهوية";
+                          } else {
                             return null;
                           }
                         },
+                        controller: nameoridnumCont,
                         textDirection: TextDirection.rtl,
                         textAlign: TextAlign.right,
                         decoration: InputDecoration(
@@ -104,6 +96,8 @@ class _LoginState extends State<Login> {
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "يرجى ادخال كلمة السر";
+                          } else if (value != args?['passwored']) {
+                            return "يرجى التأكد من كلمة السر";
                           }
                           return null;
                         },
@@ -163,19 +157,10 @@ class _LoginState extends State<Login> {
                       MaterialButton(
                         onPressed: () {
                           if (formstate.currentState!.validate()) {
-                            Navigator.pushReplacementNamed(context, 'home');
-                            // if (BCrypt.checkpw(
-                            //     passwordInput, _storedHashedPassword)) {
-                            //   // كلمة المرور صحيحة
-                            //   Navigator.pushNamed(context, 'home');
-                            // }
-                            // else if {
-                            //   // كلمة المرور غير صحيحة
-                            //   ScaffoldMessenger.of(context).showSnackBar(
-                            //     const SnackBar(
-                            //         content: Text('كلمة المرور غير صحيحة!')),
-                            //   );
-                            // }
+                            Navigator.pushReplacementNamed(context, 'home',
+                                arguments: {
+                                  'nameoridnum': nameoridnumCont.text
+                                });
                           }
                         },
                         color: Colors.orangeAccent,
@@ -206,7 +191,7 @@ class _LoginState extends State<Login> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15)),
                         child: const Text(
-                          "انشاء حساب",
+                          "مستخدم جديد؟",
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),

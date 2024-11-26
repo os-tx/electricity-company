@@ -1,5 +1,4 @@
 import 'package:electricity_company/defin.dart';
-import 'package:electricity_company/detiles1.dart';
 import 'package:electricity_company/home.dart';
 import 'package:electricity_company/login.dart';
 import 'package:electricity_company/singup.dart';
@@ -27,7 +26,6 @@ class _ElecState extends State<Elec> {
         'login': (context) => const Login(),
         'home': (context) => const Home(),
         'singup': (context) => const Singup(),
-        'detil-1': (context) => detailes1()
       },
       home: const Defin(),
     );

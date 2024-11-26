@@ -40,7 +40,7 @@ class _SingupState extends State<Singup> {
                   const SizedBox(
                     height: 50,
                     child: Text(
-                      "- انشاء حساب جديد -",
+                      "- انشاء مستخدم جديد -",
                       style: TextStyle(
                         fontSize: 19,
                         fontWeight: FontWeight.bold,
@@ -53,7 +53,8 @@ class _SingupState extends State<Singup> {
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "برجى ادخال الاسم";
-                      } else if (!RegExp(r'^[a-z-A-Z-ا-ي]+$').hasMatch(value)) {
+                      } else if (!RegExp(r'^[- a-z-A-Z-ا-ي]+$')
+                          .hasMatch(value)) {
                         return "يرجى ادخال الاسم صحيح ";
                       } else {
                         return null;
@@ -95,7 +96,7 @@ class _SingupState extends State<Singup> {
                         return "يرجى ادخال البريد الالكنروني";
                       } else if (!value.endsWith('.com') ||
                           !value.contains('@gmail')) {
-                        return "ارجوك ادخل ايميل صحيح";
+                        return "ارجوك ادخل بريد الكتروني صحيح";
                       }
 
                       return null;
@@ -182,6 +183,8 @@ class _SingupState extends State<Singup> {
                         return "يرجى ادخال رقم الجوال";
                       } else if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
                         return "يرجى ادخال رقم جوال صحيح";
+                      } else if (value.length != 9) {
+                        return "يرجى ادخال 9 أرقم لرقم جوال صحيح";
                       }
                       return null;
                     },
@@ -254,18 +257,19 @@ class _SingupState extends State<Singup> {
                     keyboardType: TextInputType.number,
                   ),
                   const SizedBox(
-                    height: 60,
+                    height: 50,
                   ),
                   MaterialButton(
                       onPressed: () {
                         setState(() {
                           if (formstate.currentState!.validate()) {
-                            Navigator.pushNamed(context, 'login', arguments: {
-                              'name': nameController.text,
-                              'email': emailController.text,
-                              'passwored': passwordController.value,
-                              'idnumber': idnumberController.value,
-                            });
+                            Navigator.pushReplacementNamed(context, 'login',
+                                arguments: {
+                                  'name': nameController.text,
+                                  'email': emailController.text,
+                                  'passwored': passwordController.text,
+                                  'idnumber': idnumberController.text,
+                                });
                           }
                         });
                       },
@@ -276,7 +280,7 @@ class _SingupState extends State<Singup> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15)),
                       child: const Text(
-                        "انشاء حساب",
+                        "انشاء مستخدم",
                         style: TextStyle(fontSize: 20),
                       ))
                 ],
