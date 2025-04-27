@@ -1,7 +1,7 @@
-import 'package:electricity_company/defin.dart';
-import 'package:electricity_company/home.dart';
-import 'package:electricity_company/login.dart';
-import 'package:electricity_company/singup.dart';
+import 'package:electricity_company/pages/defin.dart';
+import 'package:electricity_company/pages/home.dart';
+import 'package:electricity_company/pages/login.dart';
+import 'package:electricity_company/pages/singup.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -19,8 +19,9 @@ class _ElecState extends State<Elec> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(fontFamily: 'Cairo'),
       debugShowCheckedModeBanner: false,
-      initialRoute: 'defin',
+      initialRoute: 'home',
       routes: {
         'defin': (context) => const Defin(),
         'login': (context) => const Login(),
@@ -28,6 +29,12 @@ class _ElecState extends State<Elec> {
         'singup': (context) => const Singup(),
       },
       home: const Defin(),
+      builder: (context, child) {
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: child!,
+        );
+      },
     );
   }
 }

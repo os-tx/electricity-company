@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class detailes3 extends StatefulWidget {
   detailes3({super.key, this.subTitle, this.title});
 

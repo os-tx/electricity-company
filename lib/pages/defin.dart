@@ -49,7 +49,7 @@ class _DefinState extends State<Defin> {
                     child: IconButton(
                       onPressed: () {
                         setState(() {
-                          Navigator.pushNamed(context, 'login');
+                          Navigator.pushReplacementNamed(context, 'login');
                         });
                       },
                       icon: const Icon(

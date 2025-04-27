@@ -32,7 +32,6 @@ class _detailes1State extends State<detailes1> {
 
   update(String newquyry) {
     setState(() {});
-    // print(newquyry);
     query = newquyry;
     filter = element
         .where((t) => t.toLowerCase().contains(query.toLowerCase()))
@@ -46,7 +45,7 @@ class _detailes1State extends State<detailes1> {
     var w = MediaQuery.sizeOf(context).width;
     // var a = ModalRoute.of(context)!.settings.arguments as Map?;
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton.extended(
         label: const Text(
           "اضافة بلاغ",
@@ -146,9 +145,9 @@ class _detailes1State extends State<detailes1> {
                             Radius.circular(10),
                           ),
                         ),
-                        labelText: "بحث",
-                        labelStyle: TextStyle(fontSize: 20),
-                        suffixIcon: Icon(Icons.search),
+                        hintText: "بحث",
+                        hintStyle: TextStyle(fontSize: 20),
+                        prefixIcon: Icon(Icons.search),
                       ),
                     ),
                   ),
@@ -168,12 +167,12 @@ class _detailes1State extends State<detailes1> {
                         elevation: 10,
                         child: ListTile(
                           title: Text(
+                            textAlign: TextAlign.right,
                             filter[i],
                             style: const TextStyle(color: Colors.black),
                           ),
-                          // subtitle: Text("${a?['nameoridnum']}"),
-                          leading: const Icon(Icons.person),
-                          trailing: IconButton(
+                          trailing: const Icon(Icons.person),
+                          leading: IconButton(
                             onPressed: () {
                               setState(() {
                                 showDialog(

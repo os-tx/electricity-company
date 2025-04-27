@@ -6,10 +6,8 @@ class detailes2 extends StatefulWidget {
   detailes2({
     super.key,
     required this.subTitle,
-    required this.icon1,
   });
   String? subTitle;
-  IconData? icon1;
 
   @override
   State<detailes2> createState() => _detailes2State();
@@ -83,9 +81,8 @@ class _detailes2State extends State<detailes2> {
                   fontSize: 13,
                   color: Colors.black26,
                 ),
-                suffixIcon: Icon(
+                suffixIcon: const Icon(
                   Icons.search,
-                  color: Colors.purple[900],
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25),
@@ -128,22 +125,30 @@ class _detailes2State extends State<detailes2> {
                   child: ListTile(
                     title: Column(
                       children: [
-                        const Text("المبلغ المطلوب"),
-                        const Text(
-                          "15.354",
-                          style: TextStyle(color: Colors.green, fontSize: 14),
+                        const Row(
+                          children: [
+                            Text("المبلغ المطلوب: "),
+                            Text(
+                              "15.354",
+                              style: TextStyle(fontSize: 13),
+                            ),
+                          ],
                         ),
-                        const Text("رقم المشترك"),
-                        Text(
-                          filterbills[i],
-                          style: const TextStyle(
-                              color: Colors.orangeAccent, fontSize: 14),
-                        )
+                        Row(
+                          children: [
+                            const Text(
+                              "عداد رقم: ",
+                              style: TextStyle(
+                                  color: Colors.black38, fontSize: 14),
+                            ),
+                            Text(
+                              filterbills[i],
+                              style: const TextStyle(
+                                  color: Colors.black38, fontSize: 13),
+                            )
+                          ],
+                        ),
                       ],
-                    ),
-                    leading: Icon(
-                      widget.icon1,
-                      color: Colors.orangeAccent,
                     ),
                     trailing: const Column(
                       crossAxisAlignment: CrossAxisAlignment.end,

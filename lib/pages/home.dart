@@ -1,10 +1,11 @@
-import 'package:electricity_company/detiles1.dart';
-import 'package:electricity_company/detiles2.dart';
-import 'package:electricity_company/detiles3.dart';
-// import 'package:electricity_company/detiles4.dart';
-// import 'package:electricity_company/detiles5.dart';
-// import 'package:electricity_company/detiles6.dart';
+import 'package:electricity_company/pages/detiles1.dart';
+import 'package:electricity_company/pages/detiles2.dart';
+import 'package:electricity_company/pages/detiles3.dart';
+// import 'package:electricity_company/pages/detiles4.dart';
+// import 'package:electricity_company/pages/detiles5.dart';
+// import 'package:electricity_company/pages/detiles6.dart';
 import 'package:flutter/material.dart';
+import 'package:another_carousel_pro/another_carousel_pro.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -30,6 +31,14 @@ class _HomeState extends State<Home> {
     "سدد فواتيرك",
     "اطلب عداد كهرباء منزلك",
   ];
+  List<String> titles = [
+    'الخدمات الإلكترونية',
+    'تغيير بيانات',
+    'خدمات العدادات',
+    'الحصول على شهادة بيانات',
+    "سدد فواتيرك",
+    "اطلب عداد كهرباء منزلك",
+  ];
   List listicon = [
     Icons.electric_bolt_sharp,
     Icons.library_books,
@@ -38,25 +47,43 @@ class _HomeState extends State<Home> {
     Icons.payment,
     Icons.electric_meter,
   ];
-  int index = 1;
+
+  int index = 0;
+  bool isHighlighted = false;
+  int seledIndexcard = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          Expanded(
-            flex: 7,
-            child: Stack(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        title: const Text(
+          "الخدمات",
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
               alignment: Alignment.bottomRight,
               children: [
-                Container(
-                    height: 370,
-                    child: Image.asset(
-                      fit: BoxFit.cover,
-                      "images/e-4.jpeg",
-                    )),
+                SizedBox(
+                  height: 260,
+                  child: AnotherCarousel(
+                    images: const [
+                      AssetImage("images/e-4.jpeg"),
+                      AssetImage("images/e-7.jpg"),
+                      AssetImage("images/e-8.jpg"),
+                    ],
+                    dotSize: 5,
+                    indicatorBgPadding: 5.0,
+                  ),
+                ),
                 Container(
                   padding: const EdgeInsets.all(20),
                   width: 360,
@@ -72,87 +99,120 @@ class _HomeState extends State<Home> {
                 )
               ],
             ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Container(
-            margin: const EdgeInsets.only(right: 25),
-            child: const Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      "خدماتي",
-                      style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.orangeAccent),
-                      textAlign: TextAlign.right,
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      textAlign: TextAlign.right,
-                      "خدماتك في مكان واحد",
-                      style: TextStyle(
-                        color: Colors.black54,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20,
+            const SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              height: 150,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: listicon.length,
+                // reverse: false,
+                itemBuilder: (context, i) {
+                  bool isHighlighted = i == seledIndexcard;
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        seledIndexcard = i;
+                      });
+                    },
+                    child: Container(
+                      width: 110,
+                      margin: const EdgeInsets.all(5),
+                      child: Card(
+                        color:
+                            isHighlighted ? Colors.orangeAccent : Colors.white,
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                listicon[i],
+                                size: 40,
+                                color:
+                                    isHighlighted ? Colors.white : Colors.black,
+                              ),
+                              const SizedBox(height: 10),
+                              Text(
+                                titles[i],
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: isHighlighted
+                                      ? Colors.white
+                                      : Colors.black,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
-                  ],
-                )
-              ],
+                  );
+                },
+              ),
             ),
-          ),
-          Expanded(
-            flex: 8,
-            child: GridView.builder(
-              itemCount: listTitle.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            Container(
+              height: 30,
+              margin: const EdgeInsets.only(right: 20, top: 15),
+              child: const Text(
+                "الخدمات الالكترونية",
+                style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: listTitle.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   childAspectRatio: 1.1,
                   mainAxisSpacing: 2,
                   crossAxisSpacing: 2,
-                  crossAxisCount: 2),
-              itemBuilder: (context, i) => carditem(
-                Title: listTitle[i],
-                SubTitle: listsubtile[i],
-                Icon1: listicon[i],
+                  crossAxisCount: 2,
+                ),
+                itemBuilder: (context, i) => carditem(
+                  Title: listTitle[i],
+                  SubTitle: listsubtile[i],
+                  Icon1: listicon[i],
+                ),
               ),
             ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: index,
+        onTap: (value) {
+          setState(() {
+            index = value;
+          });
+        },
+        selectedItemColor: Colors.orangeAccent,
+        unselectedItemColor: Colors.grey,
+        backgroundColor: Colors.white,
+        showUnselectedLabels: true,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'الخدمات',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.description),
+            label: 'طلباتي',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.menu),
+            label: 'المزيد',
           ),
         ],
       ),
-      bottomNavigationBar: NavigationBar(
-          indicatorColor: const Color.fromARGB(255, 247, 198, 146),
-          surfaceTintColor: Colors.amber,
-          backgroundColor: const Color.fromARGB(255, 249, 248, 248),
-          selectedIndex: index,
-          height: 60,
-          onDestinationSelected: (value) {
-            index = value;
-            setState(() {});
-          },
-          destinations: const [
-            NavigationDestination(
-                icon: Icon(
-                  Icons.person,
-                  color: Colors.orange,
-                ),
-                label: "الملف الشخصي"),
-            NavigationDestination(
-                icon: Icon(
-                  Icons.app_registration_sharp,
-                  color: Colors.orange,
-                ),
-                label: "الخدمات")
-          ]),
     );
   }
 }
@@ -194,7 +254,6 @@ class carditem extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => detailes2(
                         subTitle: SubTitle,
-                        icon1: Icon1,
                       ),
                     ));
               }
@@ -253,7 +312,7 @@ class carditem extends StatelessWidget {
         },
         child: Container(
           decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
+              border: Border.all(color: Colors.orangeAccent),
               borderRadius: BorderRadius.circular(20)),
           width: 50,
           height: 50,
@@ -282,8 +341,7 @@ class carditem extends StatelessWidget {
                           maxLines: 2,
                           "$Title",
                           style: const TextStyle(
-                              color: Colors.black54,
-                              fontWeight: FontWeight.w600),
+                              color: Colors.black, fontWeight: FontWeight.w600),
                         ),
                       )
                     ],
@@ -301,9 +359,10 @@ class carditem extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         "$SubTitle",
                         style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black54,
+                        ),
                       ),
                     )
                   ],
